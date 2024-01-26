@@ -69,10 +69,15 @@ const lightbox = new SimpleLightbox('.gallery a', {
 
 function displayImages(images) {
   gallery.innerHTML = '';
-  images
-    .map(image => {
-      const card = document.createElement('li');
-      card.innerHTML = `
+  gallery.innerHTML = createMarkup(images);
+  lightbox.refresh();
+}
+
+function createMarkup(image) {
+  return image
+    .map(
+      image =>
+        `<li>
          <a class="gallery-link" href="${image.largeImageURL}">
            <img
                class="gallery-image"
@@ -85,12 +90,11 @@ function displayImages(images) {
             <li class="info-items">Comments: ${image.comments}</li>
             <li class="info-items">Downloads: ${image.downloads}</li>
             </ul>
-         </a>    
-  `;
-      gallery.appendChild(card);
-    })
+         </a> 
+        </li>   
+  `
+    )
     .join('');
-  lightbox.refresh();
 }
 
 function showMessage(message) {
